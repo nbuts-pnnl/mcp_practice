@@ -2,21 +2,15 @@ import asyncio
 import os
 
 from langchain_openai import AzureChatOpenAI
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
+from mcp import ClientSession
+from mcp.client.streamable_http import streamablehttp_client
 from langchain_mcp_adapters.tools import load_mcp_tools
 from langgraph.prebuilt import create_react_agent
 
 
-
-server_params = StdioServerParameters(
-    command="python",
-    args=["C:/Users/buts930/permitAI/mcp_test.py"]
-)
-
 async def agent_get():
 
-    async with stdio_client(server_params) as (read, write):
+    async with streamablehttp_client("http://localhost:8080/mcp") as (read, write, _):
         async with ClientSession(read, write) as session:
             # Initialize the connection
             try:
