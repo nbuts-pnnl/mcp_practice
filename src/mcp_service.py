@@ -1,11 +1,24 @@
 from fastmcp import FastMCP
 import logging
+import os
 
-LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-LOG_DIR = "logs//mcp.log"
-LOG_NAME = "mathtool"
+LOG_FORMAT = os.getenv("LOG_FORMAT")
+LOG_DIR = os.getenv("LOG_DIR")
+LOG_NAME = os.getenv("LOG_NAME")
+LOG_LEVEL = os.getenv("LOG_LEVEL").upper()
+SERVER_HOST = os.getenv("SERVER_HOST")
+SERVER_PORT = int(os.getenv("SERVER_PORT"))
 
-logging.basicConfig(level=logging.INFO,
+LOG_LEVELS = {
+    "CRITICAL": logging.CRITICAL,
+    "ERROR": logging.ERROR,
+    "WARNING": logging.WARNING,
+    "INFO": logging.INFO,
+    "DEBUG": logging.DEBUG,
+    "NOTSET": logging.NOTSET
+}
+
+logging.basicConfig(level=LOG_LEVELS.get(LOG_LEVEL),
     format=LOG_FORMAT,
     handlers=[
         logging.FileHandler(LOG_DIR),
@@ -35,4 +48,4 @@ async def multiply(a: int, b: int) -> dict:
     return {"result": c}
 
 if __name__ == "__main__":
-    mcp.run(transport="streamable-http", host="0.0.0.0", port=8080)
+    mcp.run(transport="streamable-http", host=SERVER_HOST, port=SERVER_PORT)
