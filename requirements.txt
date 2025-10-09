@@ -10,6 +10,8 @@ langgraph>=0.2.0
 # Additional dependencies that may be required
 asyncio-contextmanager>=1.0.0
 pydantic>=2.0.0
+starlette>=0.27.0
+fastapi[standard]>=0.104.0
 
 # Optional: For better logging and development
 python-dotenv>=1.0.0
