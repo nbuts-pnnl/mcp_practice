@@ -28,4 +28,5 @@ COPY .env.local .env
 EXPOSE 8000
 
 # Run the MCP service
-CMD ["fastapi", "dev", "src/mcp_service.py"]
+CMD ["fastapi", "dev", "src/main.py"]
+#CMD ["python", "src/main.py"]  --- IGNORE ---
